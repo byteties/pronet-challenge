@@ -6,6 +6,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../../core/services/book.service';
 import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { selectFavorites } from '../../../core/store/favorites.selectors';
+import { addFavorite, removeFavorite } from '../../../core/store/favorites.actions';
 
 @Component({
   selector: 'book-list-page',
@@ -22,12 +26,16 @@ import { RouterModule } from '@angular/router';
   templateUrl: './list.page.html'
 })
 export class BookListPage implements OnInit {
-  displayedColumns = ['name', 'authors', 'publisher','detail'];
+  displayedColumns = ['name', 'authors', 'publisher','favorite','detail'];
   private service = inject(BookService);
   searchText = ""
   books: any[] = [];
   filterBooks: any[] = []
+  private store = inject(Store);
+  favorites$!: Observable<string[]>;
+  
   constructor() {
+    this.favorites$ = this.store.select(selectFavorites);
   }
 
   ngOnInit() {
@@ -48,5 +56,13 @@ export class BookListPage implements OnInit {
       book.authors.join(', ').toLowerCase().includes(text) ||
       book.publisher.toLowerCase().includes(text)
     )
+  }
+
+  toggleFavorite(bookId: string, favorites: string[]) {
+    if (favorites.includes(bookId)) {
+      this.store.dispatch(removeFavorite({ bookId }));
+    } else {
+      this.store.dispatch(addFavorite({ bookId }));
+    }
   }
 }
