@@ -1,0 +1,15 @@
+<div class="book-detail-container" *ngIf="book">
+  <h2>{{ book.name }}</h2>
+  <table>
+    <tr><td>Authors</td><td>{{ book.authors.join(', ') }}</td></tr>
+    <tr><td>Publisher</td><td>{{ book.publisher }}</td></tr>
+    <tr><td>Released</td><td>{{ book.released | date }}</td></tr>
+    <tr><td>Pages</td><td>{{ book.numberOfPages }}</td></tr>
+    <tr><td>Country</td><td>{{ book.country }}</td></tr>
+    <tr><td>ISBN</td><td>{{ book.isbn }}</td></tr>
+  </table>
+  <button mat-stroked-button color="primary" routerLink="/books">
+    <mat-icon>arrow_back</mat-icon>
+    Back to List
+  </button>
+</div>

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../../core/services/book.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'book-list-page',
@@ -14,16 +15,16 @@ import { BookService } from '../../../core/services/book.service';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   styleUrls: ['./list.page.scss'],
   templateUrl: './list.page.html'
 })
 export class BookListPage implements OnInit {
   books: any[] = [];
-  displayedColumns = ['name', 'authors', 'publisher'];
+  displayedColumns = ['name', 'authors', 'publisher','detail'];
   private service = inject(BookService);
-  
   constructor() {
   }
 
@@ -31,5 +32,9 @@ export class BookListPage implements OnInit {
     this.service.getBooks().subscribe(data => {
       this.books = data;
     });
+  }
+
+  getBookId(url: string): string{
+    return url.split('/').pop() ?? ''; 
   }
 }
