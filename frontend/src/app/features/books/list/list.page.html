@@ -1,5 +1,15 @@
+<div class="search-bar-container">
+  <input 
+    type="text"
+    [(ngModel)]="searchText"
+    (ngModelChange)="applyFilter()"
+    placeholder="Search by name , author, or publisher"
+    class="search-bar"
+    autocomplete="off"
+  />
+</div>
 <div class="table-container">
-  <table mat-table [dataSource]="books" class="mat-elevation-z2">
+  <table mat-table [dataSource]="filterBooks" class="mat-elevation-z2">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Book Name</th>

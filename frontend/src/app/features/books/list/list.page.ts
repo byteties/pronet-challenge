@@ -22,19 +22,31 @@ import { RouterModule } from '@angular/router';
   templateUrl: './list.page.html'
 })
 export class BookListPage implements OnInit {
-  books: any[] = [];
   displayedColumns = ['name', 'authors', 'publisher','detail'];
   private service = inject(BookService);
+  searchText = ""
+  books: any[] = [];
+  filterBooks: any[] = []
   constructor() {
   }
 
   ngOnInit() {
     this.service.getBooks().subscribe(data => {
       this.books = data;
+      this.filterBooks = data;
     });
   }
 
   getBookId(url: string): string{
     return url.split('/').pop() ?? ''; 
+  }
+
+  applyFilter(){
+    const text = this.searchText.trim().toLocaleLowerCase()
+    this.filterBooks = this.books.filter((book)=> 
+      book.name.toLowerCase().includes(text) ||
+      book.authors.join(', ').toLowerCase().includes(text) ||
+      book.publisher.toLowerCase().includes(text)
+    )
   }
 }

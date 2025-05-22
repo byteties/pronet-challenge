@@ -1,3 +1,27 @@
+.search-bar-container {
+  width: 100vw;
+  max-width: 100vw;
+  padding: 0.4rem 0.7rem 0 0.7rem;
+  display: flex;
+  align-items: center;
+  background: transparent;
+}
+.search-bar {
+  width: 100%;
+  max-width: 500px;
+  border: 1.5px solid #d3d7e0;
+  border-radius: 2em;
+  padding: 0.7em 1.2em;
+  font-size: 1em;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 1px 8px 0 rgba(60,30,90,0.06);
+  transition: border 0.18s;
+}
+.search-bar:focus {
+  border-color: #3085fa;
+}
+
 .table-container {
   width: 100vw;
   max-width: 100vw;
