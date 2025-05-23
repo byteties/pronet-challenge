@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../../core/services/book.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectFavorites } from '../../../core/store/favorites.selectors';
@@ -32,6 +32,7 @@ export class BookListPage implements OnInit {
   books: any[] = [];
   filterBooks: any[] = []
   private store = inject(Store);
+  private router = inject(Router);
   favorites$!: Observable<string[]>;
   
   constructor() {
@@ -64,5 +65,10 @@ export class BookListPage implements OnInit {
     } else {
       this.store.dispatch(addFavorite({ bookId }));
     }
+  }
+
+  logout() {
+    localStorage.removeItem('access_token');
+    this.router.navigate(['/']);
   }
 }
